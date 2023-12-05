@@ -8,7 +8,7 @@ module.exports = {
                 .addIntegerOption(option => option.setName("개수").setDescription("던질 주사위 개수")),
         async execute(interaction) { 
                 let dicePcs = interaction.options.getInteger("개수");
-                console.log("[Command] Call......주사위");
+                logger.info("[Command] Call......주사위");
 
                 dicePcs = (dicePcs)? dicePcs:1;
 
@@ -19,7 +19,7 @@ module.exports = {
                  */
                 //NOT_Ramo#2935[진짜아님]
                 //console.log(interaction.member.user.username + "#" + interaction.member.user.discriminator+"["+interaction.member.nickname+"]");
-                console.log(interaction);
+                // logger.info(interaction);
                 // console.log(interaction.member.guild);
                 let result = "";
                 for(let i=1; i<=dicePcs; i++) {

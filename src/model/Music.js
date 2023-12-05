@@ -43,6 +43,5 @@ module.exports = class Music {
         return new EmbedBuilder()
             .setTitle("Queue added!").setURL(this.url)
             .setDescription(this.title).data
-            //.setThumbnail(this.thumbnail.url);
     }
 }

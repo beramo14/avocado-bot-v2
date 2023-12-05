@@ -3,6 +3,7 @@ const fs = require('fs');
 const ytdl = require('ytdl-core');
 const Music = require('../../model/Music');
 const { VoiceConnectionStatus , joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus, StreamType, getVoiceConnection } = require('@discordjs/voice');
+const logger = require('../../config/logger');
 
 const musicQueueArray = [];
 const ytdlOptions = {"filter" : "audioonly", "quality" : "highestaudio"};
@@ -62,7 +63,7 @@ module.exports = {
 };
 
 async function musicPlay(interaction, connection) {
-    console.log("musicQueueArray.length : ", musicQueueArray.length);
+    logger.info(`musicQueueArray.length : ${musicQueueArray.length}`);
     if(musicQueueArray.length == 0) {
         musicStop(interaction.guildId);
         return;
@@ -80,30 +81,30 @@ async function musicPlay(interaction, connection) {
     player.play(createAudioResource(ytdl(currentMusic.url, ytdlOptions)));
 
     player.on('error', error => {
-        console.error('Error:', error.message, 'with track', error);
+        logger.error(`Error: ${error.message}, with track: ${error}`);
     });
 
     player.on(AudioPlayerStatus.Playing, () => {
-        console.log(currentMusic.title, 'The audio player has started playing!');
+        logger.info(`${currentMusic.title} : The audio player has started playing!`);
     });
     player.on(AudioPlayerStatus.Idle, () => {
-        console.log('The audio player has started Idle!');
+        logger.info('The audio player has started Idle!');
         player.stop();
         global.tempPlayer = null;
         global.isNowPlaying = false;
         musicPlay(interaction, connection);
     });
     player.on(AudioPlayerStatus.Paused, () => {
-        console.log('The audio player has started Paused!');
+        logger.info('The audio player has started Paused!');
     });
     player.on(AudioPlayerStatus.AutoPaused, () => {
-        console.log('The audio player has started AutoPaused!');
+        logger.info('The audio player has started AutoPaused!');
     });
 }
 
 function musicStop(guildId) {
     autoMusicStop = setTimeout(()=>{
-        console.log("Auto Music Stop...");
+        logger.info("Auto Music Stop...");
         const connection = getVoiceConnection(guildId);
         global.isNowPlaying = false;
         global.tempPlayer = null;
