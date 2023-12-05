@@ -1,0 +1,21 @@
+{
+  "name": "avocado-bot-v2",
+  "version": "1.0.0",
+  "description": "avocado bot version 2",
+  "main": "./src/index.js",
+  "author": "Beramo",
+  "license": "MIT",
+  "scripts": {
+    "build:live": "nodemon --watch 'src/**/*' --exec",
+    "prestart": "node ./src/deploy-commands.js",
+    "start": "nodemon ./src/index.js"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.9.0",
+    "@discordjs/voice": "^0.16.1",
+    "discord.js": "^14.14.1",
+    "libsodium-wrappers": "^0.7.13",
+    "nodemon": "^3.0.2",
+    "ytdl-core": "^4.11.5"
+  }
+}
