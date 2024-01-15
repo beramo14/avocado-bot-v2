@@ -6,7 +6,13 @@ const { VoiceConnectionStatus , joinVoiceChannel, createAudioResource, createAud
 const logger = require('../../config/logger');
 
 const musicQueueArray = [];
-const ytdlOptions = {"filter" : "audioonly", "quality" : "highestaudio", "highWaterMark" : 32768};
+const ytdlOptions = {
+        "filter" : "audioonly",
+        "quality" : "highestaudio",
+        "highWaterMark": 1 << 62,
+        "liveBuffer": 1 << 62,
+        "dlChunkSize": 0
+    };
 global.isNowPlaying = false;
 global.tempPlayer = null;
 let autoMusicStop = null;
