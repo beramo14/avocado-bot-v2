@@ -6,7 +6,7 @@ const { VoiceConnectionStatus , joinVoiceChannel, createAudioResource, createAud
 const logger = require('../../config/logger');
 
 const musicQueueArray = [];
-const ytdlOptions = {"filter" : "audioonly", "quality" : "highestaudio"};
+const ytdlOptions = {"filter" : "audioonly", "quality" : "highestaudio", "highWaterMark" : 32768};
 global.isNowPlaying = false;
 global.tempPlayer = null;
 let autoMusicStop = null;
@@ -82,6 +82,7 @@ async function musicPlay(interaction, connection) {
 
     player.on('error', error => {
         logger.error(`Error: ${error.message}, with track: ${error}`);
+        console.log(error);
     });
 
     player.on(AudioPlayerStatus.Playing, () => {
